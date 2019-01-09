@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- inspiration from http://nba.spencersharpe.com/ -->
+    <meta http-equiv="content-type" content="text/html; charset=utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>2018-19 NBA Predictions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- zsubhani added code below to bring in json from flask -->
+    <script type="text/javascript">
+        var data_hoops = JSON.parse('{{ today_json | tojson | safe}}');
+     </script>
+    <!-- <script type="text/javascript" src="js/main.js"></script> -->
+</head>
+
+<body>
+    <nav class="navbar">
+        <h4 class="navbar-header text-left">2018-19 NBA Predictions</h4>
+        <!-- NBA logo from our github -->
+        <img class="navbar-logo" src="https://avatars0.githubusercontent.com/u/46196269?s=200&amp;v=4" alt="@project3team5aus">
+    </nav>
+
+    <!-- container for top of page -->
+    <div class="container-fluid">
+        <!-- header row -->
+        <div class="row">
+            <div class="col-sm">
+                <br>
+                <h3 class="text-center">Today's Scheduled Games</h3>
+                <h4 id="today_date" class="text-center">[INSERT TODAY'S DATE]</h4>
+                <p class="text-center">A green box indicates the predicted winning team.</p>
+                <br>
+            </div>
+        </div>
+        <!-- Road/Home labels above -sm breakpoint -->
+        <div class="row no-gutters">
+            <div class="col-sm-2">
+                <h6 class="text-center">Game Info</h6>
+            </div>
+            <div class="col-sm">
+                <h6 class="text-left">Road Team</h6>
+            </div>
+            <!-- this is extra space for the "--AT--" text in each game row -->
+            <div class="col-sm-2"></div>
+            <div class="col-sm">
+                <h6 class="text-left">Home Team</h6>
+            </div>
+        </div>
+        <hr>
+    <!-- close top of page container -->
+    </div>
+
+    <!-- Separate container to hold auto-populated games -->
+    <div id="today_games" class="container-fluid">
+
+        <!-- game row template html -->
+        <!-- Auto-populate game rows via D3 in logic.js -->
+        <div class="row no-gutters">
+            <!-- game details div.col-sm-2 -->
+            <div class="col-sm-2 vert_align">
+                <h6 class="text-center">[INSERT GAME TIME]</h6>
+                <h6 class="text-center">[INSERT GAME LOCATION]</h6>
+            </div>
+
+            <!-- road team div.col-sm -->
+            <div class="col-sm">
+                <!-- add "rounded border border-success" classes to figure for predicted winner -->
+                <figure class="figure center rounded border border-success">
+                    <img class="center team-logo" src="#">
+                    <figcaption class="figure-caption text-center">[INSERT ROAD TEAM NAME]</figcaption>
+                </figure>
+            </div>
+
+            <!-- divider div.col-sm-2 for "-- AT --" text -->
+            <div class="col-sm-2 vert_align"><p class="text-center">-- AT --</p></div>
+
+            <!-- home team div.col-sm-->
+            <div class="col-sm">
+                <!-- add "rounded border border-success" classes to figure for predicted winner -->
+                <figure class="figure center rounded border border-success">
+                    <img class="center team-logo" src="#">
+                    <figcaption class="figure-caption text-center">[INSERT ROAD TEAM NAME]</figcaption>
+                </figure>
+            </div>
+        <!-- close game row and add line break-->
+        </div>
+        <hr>
+    </div>
+    <!-- closes content container -->
+
+    <!-- import d3.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js"></script>
+    <!-- run custom JS script to populate game HTML rows -->
+    <script src="{{ url_for('static', filename='js/game-logic.js') }}"></script>
+</body>
+
+</html>
