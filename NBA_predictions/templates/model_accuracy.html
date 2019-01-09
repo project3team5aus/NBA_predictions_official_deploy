@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- inspiration from http://nba.spencersharpe.com/ -->
+    <meta http-equiv="content-type" content="text/html; charset=utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>2018-19 NBA Predictions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- zsubhani changed path below to ../static/css/ -->
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <h4 class="navbar-header text-left">2018-19 NBA Predictions</h4>
+        <!-- NBA logo from our github -->
+        <img class="navbar-logo" src="https://avatars0.githubusercontent.com/u/46196269?s=200&amp;v=4" alt="@project3team5aus">
+    </nav>
+
+    <!-- container for top of page -->
+    <div class="container-fluid">    
+        <hr>
+        <div class="row">
+          <div class="col-md-12">
+            <div id="nba-pie"></div>
+          </div>
+        </div>
+    </div>
+    <!-- closes content container -->
+
+    <!-- Plotly-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- zsubhani added code below to bring in json from flask -->
+    <script type="text/javascript">
+        var predict_results_list = {{ predict_list|tojson|safe }};</script>
+    <script src="{{ url_for('static', filename='js/plot_accuracy.js') }}"></script>
+  
+  <!-- bootstrap javascript packages that listens to click events for the navbar -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+  <!-- this animates the navbar hamburger menu button -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
+  <!-- not sure what this contributes -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+
+</body>
+
+</html>

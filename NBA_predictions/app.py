@@ -182,6 +182,21 @@ def y_predictions():
     print(year_json)
     return render_template("year_predictions.html", year_json=year_json)
 
+@app.route("/model_accuracy")
+def model_accuracy():
+    """Return the model_accuracy page."""
+    predict_results_url="https://raw.githubusercontent.com/zsubhani/utexas_hw_python/master/model_predictions_results.csv"
+    predict_results_df=pd.read_csv(predict_results_url)
+    # calculate number of correct predictions, have to convert to normal int
+    predict_num_correct = int(predict_results_df['road_win_prediction_correct'].sum())
+    # calculate number of total predictions, have to convert to normal int
+    predict_count = int(predict_results_df['road_win_prediction_correct'].count())
+    # calculate number of incorrect predictions
+    predict_num_incorrect = predict_count - predict_num_correct
+    # create list of predictions, first value is number correct and second value is number incorrect
+    predict_list = [predict_num_correct, predict_num_incorrect]
+    return render_template("model_accuracy.html", predict_list=predict_list)
+
 
 if __name__ == '__main__':
     app.run()
