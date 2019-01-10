@@ -1,51 +1,134 @@
-console.log('data_year_hoops is: ', data_year_hoops);
 
-var year_tableData = data_year_hoops;
-console.log('year_tableData is: ', year_tableData);
+console.log('data_hoops is: ', data_year_hoops);
 
 
-// create function called makeTable that will make a table using HTML elements
-// argument passed in is the array of data
-function make_yearTable(year_tableData) {
+// PULL IN DATA FROM JSON OBJECT. 
+// Assign the data from var data_hoops in index.html; 'data_hoops' is json sent from flask 
+// data file is imported at the bottom of index.html
+var gamesData = data_year_hoops;
 
-console.log(year_tableData);
+// Console.log whole data set from data.js to confirm it's been read correctly
+console.log(gamesData);
+// iterate through json array of game objects
+gamesData.forEach(function(game) {
+    console.log(game);
+});
 
-// create variable called year_table_html that will be used to make the 
-// year games table using json from flask
+// select container for today's games
+// delete existing rows in container
+var gameContainer = d3.select("div#today_games");
+d3.selectAll("div#today_games > *").remove();
 
-// start with making table border
-var year_table_html = "<table border='1|1'>";
+// loop through game objects in data and populate DOM elements per game
+for (var i =0; i < gamesData.length; i++) {
 
-// use for loop with tableData to bring in elements for campus_name, address, and zipcode
-for (var i = 0; i < year_tableData.length; i++) {
-    var y_campus_link = '/year_predictions'
-    console.log('y_campus_link is: ', y_campus_link);
-    year_table_html+="<tr>";
-    // add table data object and align in center for date
-    year_table_html+="<td align='center'>"+year_tableData[i].date+"</td>";
-    // add table data object and align in center for road team
-    year_table_html+="<td align='center'>"+"<div class='col-sm'>"+"<figure class='figure center rounded border-success'>"+"<img class='center team-logo' src="+year_tableData[i].road_team_logo+">"+"<figcaption class='figure-caption text-center'>"+year_tableData[i].road_team+"</figcaption>"+"</figure>"+"</div>"+"</td>";
-    //table_html+="<td align='center'>"+"<a href="+campus_link+" target='_blank'>"+tableData[i].date+"</a>"+"</td>";
-    year_table_html+="<td align='center'>"+'AT'+"</td>";
-    // add table data object and align in center for home team
-    year_table_html+="<td align='center'>"+"<div class='col-sm'>"+"<figure class='figure center rounded border-success'>"+"<img class='center team-logo' src="+year_tableData[i].home_team_logo+">"+"<figcaption class='figure-caption text-center'>"+year_tableData[i].home_team+"</figcaption>"+"</figure>"+"</div>"+"</td>";
-    // add table data object and align in center for road win prediction
-    year_table_html+="<td align='center'>"+year_tableData[i].road_win_prediction+"</td>";
-    // end of row
-    year_table_html+="</tr>";
+    // // wrap the below game builder inside the loop
+    // // ============================================================
+    // // // create new Div rows for each game object
 
-}
-// end of table creation
-year_table_html+="</table>";
-// create a full html variable to add column headers (School Name, Address, Zipcode) to the table_html we just created
-year_full_html = "<thead><tr><td align='center'><strong>Date</strong></td><td align='center'><strong>Road Team</strong></td><th></th><td align='center'><strong>Home Team</strong></td><td align='center'><strong>Road Team Prediction</strong></td></tr></thead>" + year_table_html;
+    // creates new game row, 
+    gamei = gameContainer
+        .append('div')
+        .attr('id', 'game' + i)
+        .classed('row no-gutters', true);
 
-// access by table id="games-table" from index.html file and populate with values from full_html variable
-return document.getElementById("year-games-table").innerHTML = year_full_html;
+    // divider between game div rows
+    gameContainer.append('hr');
 
-}
+    // add first child div column with game time and location
+    gamei.append('div')
+        .attr('id', 'timeLoc' + i)
+        .classed('col-sm-2 vert_align', true)
+        // add heading tag for game time
+        .append('h6')
+        .attr('id', 'time' + i)
+        .classed('text-center', true)
+        .text("INSERT GAME TIME HERE");
+
+    // update the time text
+    d3.select('h6#time' + i).text(gamesData[i].date);
+
+    // removed for year-logic
+    // // adding the second line to the game details div for the game location is not working.
+    // d3.select("div#timeLoc" + i)
+    //     .append('h6')    
+    //     .attr('id', 'loc' + i)
+    //     .classed('text-center', true)
+    //     .text("INSERT GAME LOCATION HERE");
+
+    // // update the game location text
+    // d3.select('h6#loc' + i).text(gamesData[i].location);
+
+    // create road team div.col
+    gamei.append('div')
+        .attr('id', 'roadTeam' + i)
+        .classed('col-sm', true)
+        .append('figure')
+        .attr('id','roadFig' + i)
+        .classed('figure center', true);
+        // removed IMG tag for year-logic
+        // .append('img')
+        // .attr('id', 'roadLogo' + i)
+        // .classed('center team-logo', true);
+
+    d3.select('figure#roadFig' + i).append('figcaption')
+        .classed('figure-caption text-center', true)
+        // added attr for year-logic
+        .attr('style', 'font-size:100%')
+        .text(gamesData[i].road_team);
+    
+    // removed for year-logic
+    // // update the road team logo image
+    // d3.select('img#roadLogo' + i).attr('src', gamesData[i].road_team_logo);
 
 
+    // "-- AT --" divider div.col
+    gamei.append('div')
+        .classed('col-sm-2 vert_align', true)
+        .append('p')
+        .classed('text-center', true)
+        .text('-- AT --');
 
-// call function makeTable to render table on HTML page
-make_yearTable(year_tableData);
+
+    // create home team div.col
+    gamei.append('div')
+        .attr('id', 'homeTeam' + i)
+        .classed('col-sm', true)
+        .append('figure')
+        .attr('id','homeFig' + i)
+        .classed('figure center', true);
+        // removed IMG tag for year-logic
+        // .append('img')
+        // .attr('id', 'homeLogo' + i)
+        // .classed('center team-logo', true);
+
+    d3.select('figure#homeFig' + i).append('figcaption')
+        .classed('figure-caption text-center', true)
+        // added attr for year-logic
+        .attr('style', 'font-size:100%')
+        .text(gamesData[i].home_team);
+
+    // removed for year-logic
+    // // update the home team logo image
+    // d3.select('img#homeLogo' + i).attr('src', gamesData[i].home_team_logo);
+
+
+    // conditional statment to update team logos with border to indicate win prediction
+    // does nothing if value != 'Win'|'Loss'
+    if (gamesData[i].road_win_prediction === "Win") {
+        d3.select('figure#roadFig' + i).attr('class','figure center rounded border border-success');
+    }
+    else if (gamesData[i].road_win_prediction === "Loss") {
+        d3.select('figure#homeFig' + i).attr('class','figure center rounded border border-success');
+    }
+    else{};
+    // ==================================================================================
+};
+
+// select H4 header text for "Today's Date" by id #today_date
+// update existing text with the date from one of the game objects
+var headerDate = d3.select("#today_date");
+// This line will be the default text if no game objects availble
+headerDate.text("no games available");
+// This override the above with the date from the first game object
+headerDate.text(gamesData[0].date);
