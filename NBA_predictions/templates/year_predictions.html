@@ -8,22 +8,48 @@
     <title>2018-19 NBA Predictions</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <!-- zsubhani changed path below to ../static/css/ -->
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     
-	     <!-- zsubhani added code below to bring in json from flask -->
-         <script type="text/javascript">
-            var data_year_hoops = JSON.parse('{{ year_json | tojson | safe}}');
-         </script>
-	
+    <!-- zsubhani added code below to bring in json from flask -->
+    <script type="text/javascript">
+        var data_year_hoops = JSON.parse('{{ year_json | tojson | safe}}');
+     </script>
 </head>
 
 <body>
-    <nav class="navbar">
-        <h4 class="navbar-header text-left">2018-19 NBA Predictions</h4>
-        <!-- NBA logo from our github -->
-        <img class="navbar-logo" src="https://avatars0.githubusercontent.com/u/46196269?s=200&amp;v=4" alt="@project3team5aus">
+    <!-- removed 'navbar-expand-lg' from class so button is always present -->
+    <nav class="navbar sticky-top navbar-dark bg-light" style="background-color: #006BB6 !important">
+        <a class="navbar-brand" href="/"><h4>NBA Predictions</h4></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Today's Scheduled Games</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/year_predictions">2019 Regular Season Games <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/model_accuracy">Predictions Accuracy</a>
+            </li>
+            <!-- an example of a disabled link -->
+            <!-- <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li> -->
+            </ul>
+            <!-- example of a search bar in the nav -->
+            <!-- <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+        </div>
     </nav>
+
 
     <!-- container for top of page -->
     <div class="container-fluid">
@@ -31,25 +57,82 @@
         <div class="row">
             <div class="col-sm">
                 <br>
-                <h1 class="text-center">2019 Scheduled Games</h1>
-                <!-- <p class="text-center">A green box indicates the predicted winning team.</p> -->
+                <h3 class="text-center">2019 NBA Regular Season Games</h3>
+                <p class="text-center">A green box indicates the predicted winning team.</p>
                 <br>
             </div>
         </div>
-
+        <!-- Road/Home labels above -sm breakpoint -->
+        <div class="row no-gutters">
+            <div class="col-sm-2">
+                <!-- changed this heading for year-predictions.html -->
+                <h6 class="text-center">Game Date</h6>
+            </div>
+            <div class="col-sm">
+                <h6 class="text-center">Road Team</h6>
+            </div>
+            <!-- this is extra space for the "--AT--" text in each game row -->
+            <div class="col-sm-2"></div>
+            <div class="col-sm">
+                <h6 class="text-center">Home Team</h6>
+            </div>
+        </div>
+        <hr>
     <!-- close top of page container -->
     </div>
 
-	
-	<!-- zsubhani added table code below -->
-	<div id="table-area" class="">
-            <table id="year-games-table" class="table table-striped">
-	</div>
-    <!-- read in hard-coded data as example -->
-    <script src="../js/data.js"></script>
+    <!-- Separate container to hold auto-populated games -->
+    <div id="today_games" class="container-fluid">
+
+        <!-- game row template html -->
+        <!-- Auto-populate game rows via D3 in logic.js -->
+        <div class="row no-gutters">
+            <!-- game details div.col-sm-2 -->
+            <div class="col-sm-2 vert_align">
+                <h6 class="text-center">[INSERT GAME TIME]</h6>
+                <h6 class="text-center">[INSERT GAME LOCATION]</h6>
+            </div>
+
+            <!-- road team div.col-sm -->
+            <div class="col-sm">
+                <!-- add "rounded border border-success" classes to figure for predicted winner -->
+                <figure class="figure center rounded border border-success">
+                    <img class="center team-logo" src="#">
+                    <figcaption class="figure-caption text-center">[INSERT ROAD TEAM NAME]</figcaption>
+                </figure>
+            </div>
+
+            <!-- divider div.col-sm-2 for "-- AT --" text -->
+            <div class="col-sm-2 vert_align"><p class="text-center">-- AT --</p></div>
+
+            <!-- home team div.col-sm-->
+            <div class="col-sm">
+                <!-- add "rounded border border-success" classes to figure for predicted winner -->
+                <figure class="figure center rounded border border-success">
+                    <img class="center team-logo" src="#">
+                    <figcaption class="figure-caption text-center">[INSERT ROAD TEAM NAME]</figcaption>
+                </figure>
+            </div>
+        <!-- close game row and add line break-->
+        </div>
+        <hr>
+    </div>
+    <!-- closes content container -->
+
+    <!-- import d3.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js"></script>
     <!-- run custom JS script to populate game HTML rows -->
-    <!-- <script src="../js/year-logic.js"></script> -->
-	<script src="{{ url_for('static', filename='js/year-logic.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/year-logic.js') }}"></script>
+
+    <!-- MB added for navbar upgrade -->
+    <!-- bootstrap javascript packages that listens to click events for the navbar -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
 </body>
 
 </html>

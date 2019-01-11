@@ -21,7 +21,7 @@ d3.selectAll("div#today_games > *").remove();
 
 // loop through game objects in data and populate DOM elements per game
 for (var i =0; i < gamesData.length; i++) {
-    console.log('game' + i);
+
     // // wrap the below game builder inside the loop
     // // ============================================================
     // // // create new Div rows for each game object

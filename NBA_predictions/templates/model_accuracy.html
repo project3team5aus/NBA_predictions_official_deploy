@@ -14,20 +14,47 @@
 </head>
 
 <body>
-    <nav class="navbar">
-        <h4 class="navbar-header text-left">2018-19 NBA Predictions</h4>
-        <!-- NBA logo from our github -->
-        <img class="navbar-logo" src="https://avatars0.githubusercontent.com/u/46196269?s=200&amp;v=4" alt="@project3team5aus">
+    <!-- removed 'navbar-expand-lg' from class so button is always present -->
+    <nav class="navbar sticky-top navbar-dark bg-light" style="background-color: #006BB6 !important">
+        <a class="navbar-brand" href="/"><h4>NBA Predictions</h4></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Today's Scheduled Games</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/year_predictions">2019 Regular Season Games</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/model_accuracy">Predictions Accuracy <span class="sr-only">(current)</span></a>
+            </li>
+            <!-- an example of a disabled link -->
+            <!-- <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li> -->
+            </ul>
+            <!-- example of a search bar in the nav -->
+            <!-- <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+        </div>
     </nav>
 
     <!-- container for top of page -->
     <div class="container-fluid">    
-        <hr>
+        <!-- MB moved the line break to below the chart-->
+        <!-- <hr> -->
         <div class="row">
           <div class="col-md-12">
             <div id="nba-pie"></div>
           </div>
         </div>
+        <hr>
     </div>
     <!-- closes content container -->
 
