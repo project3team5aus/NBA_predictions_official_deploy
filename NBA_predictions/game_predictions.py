@@ -113,6 +113,12 @@ driver = webdriver.Chrome(chrome_options=chromeOptions)
 executable_path = {'executable_path': 'chromedriver.exe'}
 browser = Browser('chrome', **executable_path, headless=False, options=chromeOptions)
 
+# visit main page first
+main_url = 'https://www.basketball-reference.com/'
+browser.visit(main_url)
+# wait before going through loop of each team's stats
+time.sleep(60)
+
 # loop to start the scraping of the stats
 team_list = []
 x = 0 
@@ -122,6 +128,9 @@ while x == 0:
             # URL
             url = r"https://www.basketball-reference.com/teams/" + team + "/2019.html"
             browser.visit(url)
+
+            # add some delay
+            time.sleep(20)
 
             stat_list = []
 
